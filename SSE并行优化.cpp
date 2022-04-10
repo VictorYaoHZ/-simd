@@ -7,16 +7,16 @@
 #include <pmmintrin.h>
 #include<immintrin.h>
 using namespace std;
-#define N 2048//µãµÄ¸öÊı
-#define K 8//¾ÛÀàµÄ¸öÊı
-#define E 4096//ÔªËØµÄ¸öÊı
+#define N 2048//ç‚¹çš„ä¸ªæ•°
+#define K 8//èšç±»çš„ä¸ªæ•°
+#define E 4096//å…ƒç´ çš„ä¸ªæ•°
 
 typedef struct
 {
 	float elements[E];
 }Point;
 
-int center[N];  ///  ÅĞ¶ÏÃ¿¸öµãÊôÓÚÄÄ¸ö´Ø center[k]=p£¬¼´µÚk¸öpointÎ»ÓÚµÚp¾ÛÀà
+int center[N];  ///  åˆ¤æ–­æ¯ä¸ªç‚¹å±äºå“ªä¸ªç°‡ center[k]=pï¼Œå³ç¬¬kä¸ªpointä½äºç¬¬pèšç±»
 
 Point point[N] = {
 	{1,1,1,1},
@@ -33,20 +33,20 @@ Point point[N] = {
 	{98,101,101,98}
 };
 
-Point mean[K];  ///  ±£´æÃ¿¸ö´ØµÄÖĞĞÄµã
+Point mean[K];  ///  ä¿å­˜æ¯ä¸ªç°‡çš„ä¸­å¿ƒç‚¹
 void printPointInfo(int index)
 {
-	cout << "µã :(";
+	cout << "ç‚¹ :(";
 	cout << point[index].elements[0];
 	for (int i = 1; i < E; i++)
 	{
 		cout << "," << point[index].elements[i];
 	}
-	cout << ") ÔÚ¾ÛÀà" << center[index] + 1 << "ÖĞ" << endl;
+	cout << ") åœ¨èšç±»" << center[index] + 1 << "ä¸­" << endl;
 }
 void printCenterInfo(int index)
 {
-	cout << "¾ÛÀà" << index + 1 << "µÄĞÂÖĞĞÄµãÊÇ:(";
+	cout << "èšç±»" << index + 1 << "çš„æ–°ä¸­å¿ƒç‚¹æ˜¯:(";
 	cout << mean[index].elements[0];
 	for (int i = 1; i < E; i++)
 	{
@@ -54,7 +54,7 @@ void printCenterInfo(int index)
 	}
 	cout << ")" << endl;
 }
-float getDistance(Point point1, Point point2)//¼ÆËãÅ·ÊÏ¾àÀë
+float getDistance(Point point1, Point point2)//è®¡ç®—æ¬§æ°è·ç¦»
 {
 	float d = 0.0;
 	for (int i = 0; i < E; i++)
@@ -65,13 +65,13 @@ float getDistance(Point point1, Point point2)//¼ÆËãÅ·ÊÏ¾àÀë
 	return d;
 }
 
-/// ¼ÆËãÃ¿¸ö´ØµÄÖĞĞÄµã
+/// è®¡ç®—æ¯ä¸ªç°‡çš„ä¸­å¿ƒç‚¹
 void getMean(int center[N])
 {
 	Point tep;
 	int i, j, count = 0;
 	for (i = 0; i < K; ++i)
-	{//kÊÇ¾ÛÀà¸öÊı£¬ÕâÒ»Ñ­»·ÀïÃ¿´ÎÑ­»·Ëã³öÒ»¸ö¾ÛÀàÖĞĞÄ£¬ĞòºÅÎªi
+	{//kæ˜¯èšç±»ä¸ªæ•°ï¼Œè¿™ä¸€å¾ªç¯é‡Œæ¯æ¬¡å¾ªç¯ç®—å‡ºä¸€ä¸ªèšç±»ä¸­å¿ƒï¼Œåºå·ä¸ºi
 		count = 0;
 
 		for (int m = 0; m < E; ++m)
@@ -113,7 +113,7 @@ void getMean1(int center[N])
 	Point tep[K];
 	int i, j;
 	int count[K] = { 0 };
-	{//kÊÇ¾ÛÀà¸öÊı£¬ÕâÒ»Ñ­»·ÀïÃ¿´ÎÑ­»·Ëã³öÒ»¸ö¾ÛÀàÖĞĞÄ£¬ĞòºÅÎªi
+	{//kæ˜¯èšç±»ä¸ªæ•°ï¼Œè¿™ä¸€å¾ªç¯é‡Œæ¯æ¬¡å¾ªç¯ç®—å‡ºä¸€ä¸ªèšç±»ä¸­å¿ƒï¼Œåºå·ä¸ºi
 
 		for (int m = 0; m < K; ++m)
 		{
@@ -145,7 +145,7 @@ void getMean1(int center[N])
 		{
 			__m128 t1, t2, sum;
 			Point* temp2 = &point[j];
-			Point* temp = &tep[center[j]];//±ÜÃâÆµ·±·ÃÎÊ£¬±£´æÖ¸Õë
+			Point* temp = &tep[center[j]];//é¿å…é¢‘ç¹è®¿é—®ï¼Œä¿å­˜æŒ‡é’ˆ
 			count[center[j]]++;
 			for (int m = E - 4; m >= 0; m -= 4)
 			{
@@ -187,7 +187,7 @@ void getMean1(int center[N])
 	}
 }
 
-/// ¼ÆËãÆ½·½Îó²îº¯Êı
+/// è®¡ç®—å¹³æ–¹è¯¯å·®å‡½æ•°
 float getE()
 {
 	int i, j, k;
@@ -251,7 +251,7 @@ float getE1()
 	return sum;
 }
 
-/// °ÑN¸öµã¾ÛÀà
+/// æŠŠNä¸ªç‚¹èšç±»
 void cluster()
 {
 	int i, j, q;
@@ -271,7 +271,7 @@ void cluster()
 			}
 			d = sqrt(d);
 			distance[i][j] = d;
-			/// printf("%f\n", distance[i][j]);  /// ¿ÉÒÔÓÃÀ´²âÊÔ¶ÔÓÚÃ¿¸öµãÓë3¸öÖĞĞÄµãÖ®¼äµÄ¾àÀë
+			/// printf("%f\n", distance[i][j]);  /// å¯ä»¥ç”¨æ¥æµ‹è¯•å¯¹äºæ¯ä¸ªç‚¹ä¸3ä¸ªä¸­å¿ƒç‚¹ä¹‹é—´çš„è·ç¦»
 		}
 		for (q = 0; q < K; ++q)
 		{
@@ -299,7 +299,7 @@ void cluster1()
 	    float distance[K] = {0.0};
 	     float temp1[4];
 
-	    for (j = 0; j < K; ++j)//¶ÔÓÚÃ¿¸öÖĞĞÄµã£¬¼ÇÂ¼¾àÀëµ½distanceÊı×é
+	    for (j = 0; j < K; ++j)//å¯¹äºæ¯ä¸ªä¸­å¿ƒç‚¹ï¼Œè®°å½•è·ç¦»åˆ°distanceæ•°ç»„
 		{
 		    __m128 res;
             res = _mm_setzero_ps();
@@ -349,7 +349,7 @@ void initPointSet()
 		}
 	}
 }
-bool checkFlag(int* flag, int j)//flagÖĞÃ»ÓĞjÊ±·µ»ØÕæ
+bool checkFlag(int* flag, int j)//flagä¸­æ²¡æœ‰jæ—¶è¿”å›çœŸ
 {
 	for (int i = 0; i < K; i++)
 	{
@@ -409,11 +409,11 @@ void doit()
 
 	printf("-----------------------------\n");
 
-	//¿ÉÒÔÑ¡Ôñµ±Ç°Ê±¼äÎªËæ»úÊı
+	//å¯ä»¥é€‰æ‹©å½“å‰æ—¶é—´ä¸ºéšæœºæ•°
 	initCenter();
 
 	/*
-	* mean[0].x = point[0].x;      /// ³õÊ¼»¯k¸öÖĞĞÄµã
+	* mean[0].x = point[0].x;      /// åˆå§‹åŒ–kä¸ªä¸­å¿ƒç‚¹
 mean[0].y = point[0].y;
 
 mean[1].x = point[3].x;
@@ -423,7 +423,7 @@ mean[2].x = point[6].x;
 mean[2].y = point[6].y;
 	*/
 
-	//¼ÆÊ±¿ªÊ¼
+	//è®¡æ—¶å¼€å§‹
 	clock_t start, finish;
 	long double time_getE = 0, time_getMean = 0, time_cluster = 0;
 
@@ -437,7 +437,7 @@ mean[2].y = point[6].y;
 	finish = clock();
 	time_getE += (double(finish) - double(start)) / double(CLOCKS_PER_SEC);
 
-	n++;                   ///  n¼ÆËãĞÎ³É×îÖÕµÄ´ØÓÃÁË¶àÉÙ´Î
+	n++;                   ///  nè®¡ç®—å½¢æˆæœ€ç»ˆçš„ç°‡ç”¨äº†å¤šå°‘æ¬¡
 
 	//printf("The E1 is: %f\n\n", temp1);
 
@@ -461,7 +461,7 @@ mean[2].y = point[6].y;
 
 	//printf("The E2 is: %f\n\n", temp2);
 
-	while (fabs(temp2 - temp1) != 0)   ///  ±È½ÏÁ½´ÎÆ½·½Îó²î ÅĞ¶ÏÊÇ·ñÏàµÈ£¬²»ÏàµÈ¼ÌĞøµü´ú
+	while (fabs(temp2 - temp1) != 0)   ///  æ¯”è¾ƒä¸¤æ¬¡å¹³æ–¹è¯¯å·® åˆ¤æ–­æ˜¯å¦ç›¸ç­‰ï¼Œä¸ç›¸ç­‰ç»§ç»­è¿­ä»£
 	{
 		temp1 = temp2;
 
@@ -484,7 +484,7 @@ mean[2].y = point[6].y;
 		//printf("The E%d is: %f\n", n, temp2);
 	}
 	printf("The E is: %f\n", temp2);
-	printf("The total number of cluster is: %d\n\n", n);  /// Í³¼Æ³öµü´ú´ÎÊı
+	printf("The total number of cluster is: %d\n\n", n);  /// ç»Ÿè®¡å‡ºè¿­ä»£æ¬¡æ•°
 	/*
 	for (i = 0; i < N; ++i)
 	{
@@ -498,7 +498,7 @@ mean[2].y = point[6].y;
 
 
 
-	//¼ÆÊ±½áÊø
+	//è®¡æ—¶ç»“æŸ
 	cout << "total time of getE is" << time_getE/n << endl;
 	cout << "total time of getMean is" << time_getMean/n << endl;
 	cout << "total time of cluster is" << time_cluster/n << endl;
@@ -519,11 +519,11 @@ void doit1()
 
 	printf("-----------------------------\n");
 
-	//¿ÉÒÔÑ¡Ôñµ±Ç°Ê±¼äÎªËæ»úÊı
+	//å¯ä»¥é€‰æ‹©å½“å‰æ—¶é—´ä¸ºéšæœºæ•°
 	initCenter();
 
 	/*
-	* mean[0].x = point[0].x;      /// ³õÊ¼»¯k¸öÖĞĞÄµã
+	* mean[0].x = point[0].x;      /// åˆå§‹åŒ–kä¸ªä¸­å¿ƒç‚¹
 mean[0].y = point[0].y;
 
 mean[1].x = point[3].x;
@@ -533,7 +533,7 @@ mean[2].x = point[6].x;
 mean[2].y = point[6].y;
 	*/
 
-	//¼ÆÊ±¿ªÊ¼
+	//è®¡æ—¶å¼€å§‹
 	clock_t start, finish;
 	long double time_getE = 0, time_getMean = 0, time_cluster = 0;
 
@@ -547,7 +547,7 @@ mean[2].y = point[6].y;
 	finish = clock();
 	time_getE += (double(finish) - double(start)) / double(CLOCKS_PER_SEC);
 
-	n++;                   ///  n¼ÆËãĞÎ³É×îÖÕµÄ´ØÓÃÁË¶àÉÙ´Î
+	n++;                   ///  nè®¡ç®—å½¢æˆæœ€ç»ˆçš„ç°‡ç”¨äº†å¤šå°‘æ¬¡
 
 	//printf("The E1 is: %f\n\n", temp1);
 
@@ -571,7 +571,7 @@ mean[2].y = point[6].y;
 
 	//printf("The E2 is: %f\n\n", temp2);
 
-	while (fabs(temp2 - temp1) != 0)   ///  ±È½ÏÁ½´ÎÆ½·½Îó²î ÅĞ¶ÏÊÇ·ñÏàµÈ£¬²»ÏàµÈ¼ÌĞøµü´ú
+	while (fabs(temp2 - temp1) != 0)   ///  æ¯”è¾ƒä¸¤æ¬¡å¹³æ–¹è¯¯å·® åˆ¤æ–­æ˜¯å¦ç›¸ç­‰ï¼Œä¸ç›¸ç­‰ç»§ç»­è¿­ä»£
 	{
 		temp1 = temp2;
 
@@ -594,7 +594,7 @@ mean[2].y = point[6].y;
 		//printf("The E%d is: %f\n", n, temp2);
 	}
 	printf("The E is: %f\n", temp2);
-	printf("The total number of cluster is: %d\n\n", n);  /// Í³¼Æ³öµü´ú´ÎÊı
+	printf("The total number of cluster is: %d\n\n", n);  /// ç»Ÿè®¡å‡ºè¿­ä»£æ¬¡æ•°
 
 
 /*
@@ -612,7 +612,7 @@ mean[2].y = point[6].y;
 
 
 
-	//¼ÆÊ±½áÊø
+	//è®¡æ—¶ç»“æŸ
 	cout << "total time of getE is" << time_getE/n << endl;
 	cout << "total time of getMean is" << time_getMean/n << endl;
 	cout << "total time of cluster is" << time_cluster/n << endl;
